@@ -1,1 +1,68 @@
-"arn","eventName","requestParameters","sourceIPAddress","eventTime"
+Execution ID,Query,Start time,Status,Run time,Data scanned,Query engine version used,Encryption
+dbd600c5-8dd5-4e4c-aa7e-d8ea79c3397a,MSCK REPAIR TABLE cloudtrail_logs,2025-09-27T03:21:04.400-05:00,SUCCEEDED,3.336 sec,0 MB,Athena engine version 3,
+9de76e09-dd0a-430d-b5e2-7243a8aaef5a,"SELECT userIdentity.arn,
+       eventName,
+       errorCode,
+       requestParameters,
+       eventTime
+FROM cloudtrail_logs
+WHERE eventSource = 's3.amazonaws.com'
+  AND errorCode IS NOT NULL
+ORDER BY from_iso8601_timestamp(eventTime) DESC
+LIMIT 25",2025-09-27T02:35:14.660-05:00,FAILED,142 ms,0 MB,Athena engine version 3,
+f228ebb9-7d44-428f-accf-69267ff875f5,"SELECT userIdentity.arn,
+       eventName,
+       requestParameters,
+       sourceIPAddress,
+       eventTime
+FROM cloudtrail_logs
+WHERE eventSource = 's3.amazonaws.com'
+  AND eventName IN ('GetObject','PutObject')
+ORDER BY from_iso8601_timestamp(eventTime) DESC
+LIMIT 25",2025-09-27T02:34:59.521-05:00,SUCCEEDED,500 ms,0 MB,Athena engine version 3,
+20539b7a-c268-4d44-a9da-16cbd57b345e,MSCK REPAIR TABLE cloudtrail_logs,2025-09-27T02:34:41.889-05:00,SUCCEEDED,3.284 sec,0 MB,Athena engine version 3,
+a874d903-fedc-4521-a8db-787e9a35e911,"SELECT userIdentity.arn,
+       eventName,
+       errorCode,
+       requestParameters,
+       eventTime
+FROM audit.cloudtrail_logs
+WHERE eventSource = 's3.amazonaws.com'
+  AND errorCode IS NOT NULL
+ORDER BY from_iso8601_timestamp(eventTime) DESC
+LIMIT 25",2025-09-27T02:28:13.138-05:00,FAILED,161 ms,0 MB,Athena engine version 3,
+77e64451-890a-481c-a951-eda9e62e1ebc,"SELECT userIdentity.arn,
+       eventName,
+       requestParameters,
+       sourceIPAddress,
+       eventTime
+FROM audit.cloudtrail_logs
+WHERE eventSource = 's3.amazonaws.com'
+  AND eventName IN ('GetObject','PutObject')
+ORDER BY from_iso8601_timestamp(eventTime) DESC
+LIMIT 25",2025-09-27T02:27:30.568-05:00,SUCCEEDED,602 ms,0 MB,Athena engine version 3,
+f69a834c-c83e-4ac1-999b-9c47485dc3ba,"CREATE EXTERNAL TABLE IF NOT EXISTS audit.cloudtrail_logs ( eventVersion string, userIdentity struct< type:string, principalId:string, arn:string, accountId:string, accessKeyId:string, userName:string>, eventTime string, eventSource string, eventName string, awsRegion string, sourceIPAddress string, userAgent string, requestParameters string, responseElements string, additionalEventData string, requestId string, eventId string, readOnly string, resources array<struct<arn:string,accountId:string,type:string>>, eventType string
+)
+PARTITIONED BY (region string, year string, month string, day string)
+ROW FORMAT SERDE 'com.amazon.emr.hive.serde.CloudTrailSerde'
+STORED AS INPUTFORMAT 'com.amazon.emr.cloudtrail.CloudTrailInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION 's3://cwh-sbx-logs-718962589155-us-east-2/AWSLogs/718962589155/CloudTrail/'
+TBLPROPERTIES ('classification'='cloudtrail')",2025-09-27T02:26:21.712-05:00,SUCCEEDED,395 ms,0 MB,Athena engine version 3,
+104e3613-4a90-4225-8e95-589c396f7593,CREATE DATABASE IF NOT EXISTS audit,2025-09-27T02:24:39.133-05:00,SUCCEEDED,274 ms,0 MB,Athena engine version 3,
+0eb9dc2f-4252-4198-bf17-23d7262a6f50,"CREATE EXTERNAL TABLE IF NOT EXISTS cloudtrail_logs ( eventVersion string, userIdentity struct<type:string,principalId:string,arn:string,accountId:string,accessKeyId:string,userName:string>, eventTime string, eventSource string, eventName string, awsRegion string, sourceIPAddress string, userAgent string, requestParameters string, responseElements string, additionalEventData string, requestId string, eventId string, readOnly string, resources array<struct<arn:string,accountId:string,type:string>>, eventType string
+)
+PARTITIONED BY (region string, year string, month string, day string)
+ROW FORMAT SERDE 'com.amazon.emr.hive.serde.CloudTrailSerde'
+STORED AS INPUTFORMAT 'com.amazon.emr.cloudtrail.CloudTrailInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION 's3://cwh-sbx-logs-<718962589155>-us-east-2/AWSLogs/<ACCOUNT_ID>/CloudTrail/'
+TBLPROPERTIES ('classification'='cloudtrail')",2025-09-27T02:16:17.858-05:00,FAILED,869 ms,0 MB,Athena engine version 3,
+1ca5407e-0fb7-4921-bb03-520c895a0f8a,"CREATE EXTERNAL TABLE IF NOT EXISTS cloudtrail_logs ( eventVersion string, userIdentity struct<type:string,principalId:string,arn:string,accountId:string,accessKeyId:string,userName:string>, eventTime string, eventSource string, eventName string, awsRegion string, sourceIPAddress string, userAgent string, requestParameters string, responseElements string, additionalEventData string, requestId string, eventId string, readOnly string, resources array<struct<arn:string,accountId:string,type:string>>, eventType string
+)
+PARTITIONED BY (region string, year string, month string, day string)
+ROW FORMAT SERDE 'com.amazon.emr.hive.serde.CloudTrailSerde'
+STORED AS INPUTFORMAT 'com.amazon.emr.cloudtrail.CloudTrailInputFormat'
+OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION 's3://cwh-sbx-logs-<ACCOUNT_ID>-us-east-2/AWSLogs/<ACCOUNT_ID>/CloudTrail/'
+TBLPROPERTIES ('classification'='cloudtrail')",2025-09-27T02:09:29.175-05:00,FAILED,2.598 sec,0 MB,Athena engine version 3,
