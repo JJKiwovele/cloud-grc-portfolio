@@ -1,0 +1,15 @@
+{
+  "Version":"2012-10-17",
+  "Statement":[
+    { "Effect":"Allow","Action":["s3:ListBucket"],
+      "Resource":["arn:aws:s3:::cwh-sbx-processed-jj"],
+      "Condition":{"StringLike":{"s3:prefix":["phi/redacted/*"]}}
+    },
+    { "Effect":"Allow","Action":["s3:GetObject"],
+      "Resource":["arn:aws:s3:::cwh-sbx-processed-jj/phi/redacted/*"]
+    },
+    { "Effect":"Allow","Action":["kms:Decrypt","kms:DescribeKey"],
+      "Resource":["arn:aws:kms:us-east-2:718962589155:key/ae064ab5-097d-4c61-b06a-98b0133315d0"]
+    }
+  ]
+}
